@@ -2,9 +2,9 @@
 
 See [the Guavabot website](http://guavabot.cs170.org/) to get started!
 
-###Group "sudo rm rf"
+### Group "sudo rm rf"
 
-###Member:
+### Member:
 
 [Jiahan Yu](<https://github.com/VirginiaYu>) 3034502719
 
