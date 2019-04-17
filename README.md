@@ -2,13 +2,15 @@
 
 See [the Guavabot website](http://guavabot.cs170.org/) to get started!
 
-Group member:
+###Group "sudo rm rf"
+
+###Member:
 
 [Jiahan Yu](<https://github.com/VirginiaYu>) 3034502719
 
 [Haosheng Wang](<https://github.com/FlyingDutchman1007>) 3034505150
 
-[Yuan Changcheng](<https://github.com/EricYJA/>) 3034298427
+[Yuan Changcheng](<https://github.com/EricYJA>) 3034298427
 
 ---
 
