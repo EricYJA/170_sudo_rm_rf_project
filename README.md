@@ -43,14 +43,12 @@ The implementation of this project could be split into two parts: one is figurin
 
    Answer: 
    
-   No scout is needed since scouting can only help us find the position of bots and we have known where all the bots are. Note in this case, not every vertex has gauvabots. So the optimality of the solution implemented by MST in question 1 is no longer ensured. So
+   No scout is needed since scouting can only help us find the position of bots and we have known where all the bots are. Note in this case, not every vertex has gauvabots. So the optimality of the solution implemented by MST in question 1 is no longer ensured as a MST that covers some subset of the vertices in the graph also works. To clarify, this MST is a minimum-weight connected subgraph of that inculdes all the vertices that having bots. However, the MST not necessarily consists of only these vertices. The description of such a tree is much close to the definition of a Steiner Tree yet with a specified root (the home vertex).
    
-   as we only need a MST that covers some subset of the vertices in the graph. To clarify, this MST is a minimum-weight connected subgraph of that inculdes all the vertices that having bots. However, the MST not necessarily consists of only these vertices. The description of such a tree is much close to the definition of a Steiner Tree yet with a specified root (the home vertex).
-   
-   Hence, global MST, block MST, and shortest path tree are the three main pathes to solve it in our idea. With more investigation, we found Steiner tree problem that maches what
-   we are looking for. The solution of the problem would give us a MST of some vertices for a graph. Using the algorithm stated above to find a tree. Then, use the remote algorithm in 1 to remote the bots home. 
-   
-   
+   Hence, MST of the whole graph, several MSTs of the partial graph, and the shortest path tree are the three main ideas to solve the problem of getting all bots home. The solution to generating the Steiner tree would also give us a MST of some vertices for a graph. Using the algorithm stated above to find a tree. Then, use the remote algorithm in 1 to remote the bots home. 
+  
+
+
 3. If you didn't care about getting the bots home and just wanted to find their locations as quickly as possible, what sequence of scouts and remotes would you do?
 
    Answer: 
