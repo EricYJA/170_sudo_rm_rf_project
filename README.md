@@ -51,7 +51,7 @@ The main idea is to find the MST for the whole graph and then remote the edges a
 
 Analysis:
 
-This method guarantees that all the bots would be found. When (the bots number / the vertices number) becomes larger, this algorithm would gets better. However, the performance for this algorithm for the test cases is not so good since there's only 5 bots for most of the cases. The average score gained for this algorithm is about 88. 
+This method guarantees that all the bots would be found. When (the bots number / the vertices number) becomes larger, this algorithm would gets better. However, the performance for this algorithm for the test cases is not so good since there's only 5 bots for most of the cases. This algorithm would do poorly when the bot number is relatively small. The average score gained for this algorithm is about 88. 
 
 
 
@@ -63,7 +63,7 @@ Find the MST first. Scout all the nodes with the max depth in MST with all stude
 
 Analysis:
 
-Notice that this algorithm costs less than the algorithm before. It eliminate all the remotes that are unlikely to find bots. However, this algorithm does not guarantee finding all the bots. The gain for this algorithm has. an average of 75. However, the gain could reach 95 and higher if all the bots are found, proving you are lucky. 
+Notice that this algorithm costs less than the algorithm before. It eliminate all the remotes that are unlikely to find bots. However, this algorithm does not guarantee finding all the bots. The gain for this algorithm has an average of 75. However, the gain could reach 95 and higher if all the bots are found, proving you are lucky. This algorithm would do extremely well when the accuracy of the students are high and the number of bots is relatively large. 
 
 
 
@@ -83,9 +83,20 @@ The algorithm could find a path for each bots. Because the second step will not 
 
 Main idea:
 
-create dense clusters in the connected graph: we first use some defined function to measure the size of graph and separate the graph into several components. Can be sort the degree descending. Max all shortest path and divide the length by the function of number of vertices, split into subtrees. Function unknow, should try. Another one is to delete heaviest edge until we have some number of subgroups.
+Create dense clusters in the connected graph: we first use some defined function to measure the size of graph and separate the graph into several components. Can be sort the degree descending. Max all shortest path and divide the length by the function of number of vertices, split into subtrees. Function unknow, should try. Another one is to delete heaviest edge until we have some number of subgroups.
+
+Analysis:
+
+The implementation for this algorithm is still in progress. Considering this algorithm is quite complicated. We would not give a detailed analysis for now. 
 
 
+##### Steiner tree:
+
+Main idea:
+Use the algorithm in Q3 to find all the bots's location. Then, find a Steiner tree for all the bot vertices and the home vertices. Then, use the same idea as Q1 to move the bots to the home vertices. 
+
+Analysis:
+This algorithm is considered as the best solution so far, since it's the optimal solution for moving all the bots home if their locations are known to us. The only problem is how to find all the bots location with the min cost. If we want to check the scout result, we need to remote on that vertex, which would incereases the cost. The method to find all the bots' location would be improved later.
 
 
 
