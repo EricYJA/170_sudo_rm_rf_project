@@ -83,7 +83,7 @@ Notice that this algorithm costs less than the algorithm before. It eliminate al
 
 Main idea:
 
-We first calculate students’ scout. Sorting the node with the possibility of having at least one bot. Thus we could find out which vertex has the most possibility of containing bots. Then we would like to find out which vertex has bots. We move the bots according to student’s scout one by one. Since each remote ends we could know the quantity of bots moved. If the return value is 0 then indicates that node do not have bots. The finding bots process will end if all the missing bots are find. At last we use shortest path algorithm, by calculating the Dijkstra path. Sending the bots home with the shortest path.
+We first calculate students’ scout. Sorting the node with the possibility of having at least one bot. Thus we could find out which vertex has the most possibility of containing bots. Then we would like to find out which vertex has bots. We move the bots according to student’s scout one by one. Since each remote ends we could know the quantity of bots moved. If the return value is 0 then indicates that node do not have bots. The finding bots process will end if all the missing bots are found. At last we use shortest path algorithm, by calculating the Dijkstra path. Sending the bots home with the shortest path.
 
 Analysis:
 
