@@ -24,7 +24,7 @@ The implementation of this project could be split into two parts: one is figurin
 
 1. If there was a Guavabot on every node, what sequence of scouts and remotes would you do to get them all home?
 
-Answer: 
+   Answer: 
    No scout is needed since we are given every bot's location by the assumption that "there was a Guavabot on every node". In order to know the sequence of romotes, we first find the Minimum Spanning Tree of the whole graph and treat the home vertex as the root of the MST. Then, we move the bots from the leaves the MST to the root(home vertex). Due to the minimum property of the MST, it has the optimal(minimum) csot to move all the bots from their original location to the home vertex. 
 
    To implement it, the detailed algorithm is given as follows. Note that we are in a undirected graph and moving the bots from non-home vertices to the home vertex requires direction specified. Since the cost of remoting bots from one node to another depends only on the weight of the edge we are going to pass, rather than the number of bots we are going to move. In that case, merge operations are needed as we move the bots of the same depth at the same iteration and we have to make sure that we remote every edge in the MST only once. So the remoting process is: 
