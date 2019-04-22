@@ -25,15 +25,20 @@ The implementation of this project could be split into two parts: one is figurin
 1. If there was a Guavabot on every node, what sequence of scouts and remotes would you do to get them all home?
 
 Answer: 
+   No scout is needed since we are given every bot's location by the assumption that "there was a Guavabot on every node". In order to know the sequence of romotes, we first find the Minimum Spanning Tree of the whole graph and treat the home vertex as the root of the MST. Then, we move the bots from the leaves the MST to the root(home vertex). Due to the minimum property of the MST, it has the optimal(minimum) csot to move all the bots from their original location to the home vertex. 
 
-   Note that no scout is needed since we have known every bot's location. First, find the Minimum Spanning Tree and treat the home vertex as the root of the MST. Then, we move the bots from the leaves the MST to the root(home vertex). Due to the minimum property of the MST, it has the optimal(minimum) csot to move all the bots from their original location to the home vertex. 
-
-   To implement it, the detailed algorithm is given as follows. Note that we are in a undirected graph while moving the bots from non-home vertices to the home vertex requires direction specified. Since the cost of remoting bots from one node to another depends only on the weight of the edge we are going to pass, but not the number of bots we are going to remote. In this case, we need merge operations so that we move the bots of the same depth and ensure that we remote every edge in the MST only once. So the basic idea is: (1) Start from the vertices with the maximum depth in the MST and remote them along the direction of reducing one depth in MST. (2) Delete the vertices with the maximum depth from the MST and get a size-reduced MST. (3) Repeat the procedures (1) and (2) based on the updated MST, which is generated at the end of each iteration. (4) Stop remoting bots/iterations once we detect there is only one vertex, i.e., the home vertex, in the latest MST. As long as we keep following the algorithm, we can ensure that each edge in the original MST can be passed only once, so that the cost of remoting along any edge in the MST would be counted into total cost only once. 
+   To implement it, the detailed algorithm is given as follows. Note that we are in a undirected graph and moving the bots from non-home vertices to the home vertex requires direction specified. Since the cost of remoting bots from one node to another depends only on the weight of the edge we are going to pass, rather than the number of bots we are going to move. In that case, merge operations are needed as we move the bots of the same depth at the same iteration and we have to make sure that we remote every edge in the MST only once. So the remoting process is: 
+   (1) Start from the vertices with the maximum depth in the MST and remote those vertices along the direction of reducing one depth in MST. 
+   (2) Delete the vertices with the maximum depth from the MST and get a size-reduced MST. 
+   (3) Repeat the procedures (1) and (2) based on the updated MST, which is generated at the end of each iteration. 
+   (4) Stop remoting bots/iterations once we detect there is only one vertex, i.e., the home vertex, in the latest MST. As long as we keep following the algorithm, we can ensure that each edge in the original MST can be passed only once, so that the remote cost along any edge in the MST would be counted into total cost for only once. 
 
 
 2. More generally, if you knew where all the bots were, what sequence of scouts and remotes would you do to get them all home?
 
-   No scout is needed since we know every bot's location. In this case, the algorithm is more complicated, cause we want a MST that covers part of the vertices. Hence, global MST, block MST, and shortest path tree are the three main pathes to solve it in our idea. With more investigation, we found Steiner tree problem that maches what
+   No scout is needed since scouting can only help us finding the position of bots and we have known where all the bots are. Note in this case, not every vertex has gauvabots. The optimality of MST solution in question 1 is no longer ensured because we only need a MST that covers part of the vertices in the graph. 
+   
+   is more complicated, cause we want a MST that covers part of the vertices. Hence, global MST, block MST, and shortest path tree are the three main pathes to solve it in our idea. With more investigation, we found Steiner tree problem that maches what
    we are looking for. The solution of the problem would give us a MST of some vertices for a graph. Using the algorithm stated above to find a tree. Then, use the remote algorithm in 1 to remote the bots home. 
    
 3. If you didn't care about getting the bots home and just wanted to find their locations as quickly as possible, what sequence of scouts and remotes would you do?
