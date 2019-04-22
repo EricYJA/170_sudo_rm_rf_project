@@ -20,7 +20,7 @@ This project implementation could be split into two parts, one is finding the bo
 
 
 
-###Question answering
+### Question answering:
 
 1. If there was a Guavabot on every node, what sequence of scouts and remotes would you do to get them all home?
 
@@ -41,7 +41,7 @@ This project implementation could be split into two parts, one is finding the bo
 
 
 
-### Our algorithm:
+### Our algorithms:
 
 ##### Brute-force MST without scouting
 
