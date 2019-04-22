@@ -24,9 +24,11 @@ The implementation of this project could be split into two parts: one is figurin
 
 1. If there was a Guavabot on every node, what sequence of scouts and remotes would you do to get them all home?
 
-   Note that no scout is needed since we know every bot's location. First, find the MST and treat the home vertex as root. Then, move the bots from the leaves the MST to the root. Since MST is the min, there's no better way. 
+Answer: 
 
-   To implement this, the detailed algorithm is stated as follows. Note that we are in a undirected graph, then to move the bots from non-home vertices to home vertices requires direction specified. Also note that the merging operation is needed, that is, move the bots according to their depth, make sure remoting every edge in the MST once. Start from the vertices with the max depth and remote them along the MST. Then, delete the vertices with the max depth from the MST. Keep doing this until there's only one home vertex in the MST. 
+   Note that no scout is needed since we have known every bot's location. First, find the Minimum Spanning Tree and treat the home vertex as the root of the MST. Then, we move the bots from the leaves the MST to the root(home vertex). Due to the minimum property of the MST, it has the optimal(minimum) csot to move all the bots from their original location to the home vertex. 
+
+   To implement it, the detailed algorithm is given as follows. Note that we are in a undirected graph while moving the bots from non-home vertices to the home vertex requires direction specified. Since the cost of remoting bots from one node to another depends only on the weight of the edge we are going to pass, but not the number of bots we are going to remote. In this case, we need merge operations so that we move the bots of the same depth and ensure that we remote every edge in the MST only once. So the basic idea is: (1) Start from the vertices with the maximum depth in the MST and remote them along the direction of reducing one depth in MST. (2) Delete the vertices with the maximum depth from the MST and get a size-reduced MST. (3) Repeat the procedures (1) and (2) based on the updated MST, which is generated at the end of each iteration. (4) Stop remoting bots/iterations once we detect there is only one vertex, i.e., the home vertex, in the latest MST. As long as we keep following the algorithm, we can ensure that each edge in the original MST can be passed only once, so that the cost of remoting along any edge in the MST would be counted into total cost only once. 
 
 
 2. More generally, if you knew where all the bots were, what sequence of scouts and remotes would you do to get them all home?
