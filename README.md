@@ -52,8 +52,16 @@ The implementation of this project could be split into two parts: one is figurin
 
    Answer: 
    
-   Apply all the students to scout on each vertex, and rank all the vertices with the number of students that reports yes. Starts from the vertex with the highest rank and then remote it with respect to the shortest path tree. Count the number of the 
-   bots found and repeat the step until all the bots are found. 
+   The idea is presented as below:
+   
+   (1) Apply all the students to scout on each vertex in the graph. 
+   
+   (2) Rank all the vertices with the number of students that reports yes on the vertex. 
+   
+   (3) Extract the vertex of the highest rank and remote the bots of that vertex along the first of edge in the shortest path from that vertex to the home vertex. As the remote function returns the number of bots have been remoted, we can obtain the information that whether we remote some bots or we actually remote nothing. If the number of remoted bots is not zero,
+   
+   Apply all the students to scout on each vertex, and rank all the vertices with the number of students that reports yes. Each time we extract the vertex of the highest rank and then remote the bots
+   Starts from the vertex with the highest rank and then remote it with respect to the shortest path tree. Count the number of the bots found and repeat the step until all the bots are found. 
 
 
 
