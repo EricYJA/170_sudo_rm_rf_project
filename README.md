@@ -16,7 +16,7 @@ See [the Guavabot website](http://guavabot.cs170.org/) to get started!
 
 ### The project design document：
 
-The implementation of this project could be split into two parts: one is figuring out the bots' location, the other is moving the bots back home. Generally, the students would give us the answer. Hence, it's reasonable to follow the advice of the students. Looking into the score counting formula, we find that the score gain by getting bots home is greater than the score gain by min the time cost. Thus, moving all the bots home has the highest priority. 
+The implementation of this project could be split into two parts: one is figuring out the bots' location, the other is moving the bots back home. Notice that the cost of remoting bots towards an edge is far more expensive than the cost of scouting our students. Thus, we should make use of the students and follow the advice of the majority of the students, which turns out to obtain most of the locations of bots generally. Furthermore, the evaluation function of the project implies that the score gained by sending a bot back home is greater than the score gained by saving time during scouting and remoting. Therefore, our algorithms are supposed to find the locations of bots as much as possible as we regard the situation that all the bots have been sent back home as the highest priority state.
 
 
 
