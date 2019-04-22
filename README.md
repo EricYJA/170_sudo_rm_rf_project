@@ -16,7 +16,7 @@ See [the Guavabot website](http://guavabot.cs170.org/) to get started!
 
 ### The project design document：
 
-The implementation of this project could be split into two parts: one is figuring out the bots' location, the other is moving the bots back home. Notice that the cost of remoting bots towards an edge is far more expensive than the cost of scouting our students. Thus, we should make use of the students and follow the advice of the majority of the students, which turns out to obtain most of the locations of bots generally. Furthermore, the evaluation function of the project implies that the score gained by sending a bot back home is greater than the score gained by saving time during scouting and remoting. Therefore, our algorithms are supposed to find the locations of bots as much as possible as we regard the situation that all the bots have been sent back home as the highest priority state.
+The implementation of this project could be split into two parts: one is figuring out the bots' location, the other is moving the bots back home. Notice that the cost of remoting bots towards an edge is far more expensive than the cost of scouting our students. Thus, we should make use of the students and follow the advice of the majority of the students, which turns out to obtain most of the locations of bots generally. Furthermore, the evaluation function of the project implies that the score obtained by sending a bot back home is greater than the score gained by saving time during scouting and remoting. Therefore, our algorithms are supposed to find the locations of bots as much as possible as we regard the situation that all the bots have been sent back home as the highest priority state.
 
 
 
@@ -34,24 +34,35 @@ The implementation of this project could be split into two parts: one is figurin
    
    (2) Delete the vertices with the maximum depth from the MST and get a size-reduced MST. 
    
-   (3) Repeat the procedures (1) and (2) based on the updated MST, which is generated at the end of each iteration. 
+   (3) Repeat the procedures (1) and (2) based on the updated MST which is generated at the end of each iteration. 
    
    (4) Stop remoting bots/iterations once we detect there is only one vertex, i.e., the home vertex, in the latest MST. As long as we keep following the algorithm, we can ensure that each edge in the original MST can be passed only once, so that the remote cost along any edge in the MST would be counted into total cost for only once. 
 
 
 2. More generally, if you knew where all the bots were, what sequence of scouts and remotes would you do to get them all home?
 
-   No scout is needed since scouting can only help us finding the position of bots and we have known where all the bots are. Note in this case, not every vertex has gauvabots. The optimality of MST solution in question 1 is no longer ensured because we only need a MST that covers part of the vertices in the graph. 
+   Answer: 
    
-   is more complicated, cause we want a MST that covers part of the vertices. Hence, global MST, block MST, and shortest path tree are the three main pathes to solve it in our idea. With more investigation, we found Steiner tree problem that maches what
+   No scout is needed since scouting can only help us find the position of bots and we have known where all the bots are. Note in this case, not every vertex has gauvabots. So the optimality of the solution implemented by MST in question 1 is no longer ensured as we only need a MST that covers some subset of the vertices in the graph. To clarify, this MST is a minimum-weight connected subgraph of that inculdes all the vertices that having bots. However, the MST not necessarily consists of only these vertices. The description of such a tree is much close to the definition of a Steiner Tree yet with a specified root (the home vertex).
+   
+   Hence, global MST, block MST, and shortest path tree are the three main pathes to solve it in our idea. With more investigation, we found Steiner tree problem that maches what
    we are looking for. The solution of the problem would give us a MST of some vertices for a graph. Using the algorithm stated above to find a tree. Then, use the remote algorithm in 1 to remote the bots home. 
    
 3. If you didn't care about getting the bots home and just wanted to find their locations as quickly as possible, what sequence of scouts and remotes would you do?
 
+   Answer: 
+   
    Apply all the students to scout on each vertex, and rank all the vertices with the number of students that reports yes. Starts from the vertex with the highest rank and then remote it with respect to the shortest path tree. Count the number of the 
    bots found and repeat the step until all the bots are found. 
 
 
+
+4. What ideas do you have for solvers? Please provide at least 2. What are their advantages/disadvantages?
+
+5. What kinds of inputs do you think your solvers will do well on? Do poorly on?
+
+   Answer: See below algorithms.
+   
 
 ### Our algorithms:
 
