@@ -43,10 +43,13 @@ The implementation of this project could be split into two parts: one is figurin
 
    Answer: 
    
-   No scout is needed since scouting can only help us find the position of bots and we have known where all the bots are. Note in this case, not every vertex has gauvabots. So the optimality of the solution implemented by MST in question 1 is no longer ensured as we only need a MST that covers some subset of the vertices in the graph. To clarify, this MST is a minimum-weight connected subgraph of that inculdes all the vertices that having bots. However, the MST not necessarily consists of only these vertices. The description of such a tree is much close to the definition of a Steiner Tree yet with a specified root (the home vertex).
+   No scout is needed since scouting can only help us find the position of bots and we have known where all the bots are. Note in this case, not every vertex has gauvabots. So the optimality of the solution implemented by MST in question 1 is no longer ensured. So
+   
+   as we only need a MST that covers some subset of the vertices in the graph. To clarify, this MST is a minimum-weight connected subgraph of that inculdes all the vertices that having bots. However, the MST not necessarily consists of only these vertices. The description of such a tree is much close to the definition of a Steiner Tree yet with a specified root (the home vertex).
    
    Hence, global MST, block MST, and shortest path tree are the three main pathes to solve it in our idea. With more investigation, we found Steiner tree problem that maches what
    we are looking for. The solution of the problem would give us a MST of some vertices for a graph. Using the algorithm stated above to find a tree. Then, use the remote algorithm in 1 to remote the bots home. 
+   
    
 3. If you didn't care about getting the bots home and just wanted to find their locations as quickly as possible, what sequence of scouts and remotes would you do?
 
@@ -56,13 +59,16 @@ The implementation of this project could be split into two parts: one is figurin
    
    (1) Apply all the students to scout on each vertex in the graph. 
    
-   (2) Rank all the vertices with the number of students that reports yes on the vertex. 
+   (2) Rank all the vertices with the percentage of students that reports yes on the vertex. 
    
-   (3) Extract the vertex of the highest rank and remote the bots of that vertex along the first of edge in the shortest path from that vertex to the home vertex. As the remote function returns the number of bots have been remoted, we can obtain the information that whether we remote some bots or we actually remote nothing. If the number of remoted bots is not zero,
-   
-   Apply all the students to scout on each vertex, and rank all the vertices with the number of students that reports yes. Each time we extract the vertex of the highest rank and then remote the bots
-   Starts from the vertex with the highest rank and then remote it with respect to the shortest path tree. Count the number of the bots found and repeat the step until all the bots are found. 
-
+   (3) (we have three ideas about this procedure)
+      Method 1: Extract the vertex of the highest rank and remote the bots of that vertex to the nearest adjacent vertex. 
+      
+      Method 2: Extract the vertex of the highest rank and remote the bots of that vertex along the first edge on the shortest path from that vertex to the home vertex. 
+      
+      Method 3: Extract the vertex of the highest rank and remote the bots of that vertex to the adjacent vertex with highest percentage of students that reports yes. In this case, the destination of remoting is more likely to have bots. 
+     
+   (4) As the remote function returns the number of bots have been remoted, we can obtain the number of bots we just remote (the number can even be zero). We record the number of the bots if it is non-zero and repeat the above procedures (1)-(3) until we have found all the |L| bots. Note it is not necessary to move all the bots back home, yet it is possible that we have sent back all the bots home when we stop our algorithm. We always keep track of the number of bots in vertices that have been served as remoting destinations.
 
 
 4. What ideas do you have for solvers? Please provide at least 2. What are their advantages/disadvantages?
