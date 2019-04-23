@@ -14,7 +14,7 @@ See [the Guavabot website](http://guavabot.cs170.org/) to get started!
 
 ---
 
-### The project design document：
+### Design doc：
 
 The implementation of this project could be split into two parts: one is figuring out the bots' location, the other is moving the bots back home. Notice that the cost of remoting bots towards an edge is far more expensive than the cost of scouting our students. Thus, we should make use of the students and follow the advice of the majority of the students, which turns out to obtain most of the locations of bots generally. Furthermore, the evaluation function of the project implies that the score obtained by sending a bot back home is greater than the score gained by saving time during scouting and remoting. Therefore, our algorithms are supposed to find the locations of bots as much as possible as we regard the situation that all the bots have been sent back home as the highest priority state.
 
@@ -30,7 +30,7 @@ The implementation of this project could be split into two parts: one is figurin
 
    To implement it, the detailed algorithm is given as follows. Note that we are in a undirected graph and moving the bots from non-home vertices to the home vertex requires direction specified. Since the cost of remoting bots from one node to another depends only on the weight of the edge we are going to pass, rather than the number of bots we are going to move. In that case, merge operations are needed as we move the bots of the same depth at the same iteration and we have to make sure that we remote every edge in the MST only once. So the remoting process is: 
    
-   (1) Start from the vertices with the maximum depth in the MST and remote those vertices along the direction of reducing one depth in MST. 
+   (1) Start from the vertices with the maximum depth in the MST and remote bots on those vertices along the direction of reducing one depth in MST. 
    
    (2) Delete the vertices with the maximum depth from the MST and get a size-reduced MST. 
    
@@ -61,11 +61,11 @@ The implementation of this project could be split into two parts: one is figurin
    
    (3) (we have three ideas about this procedure)
    
-         Method 1: Extract the vertex of the highest rank and remote the bots of that vertex to the nearest adjacent vertex. 
+      Method 1: Extract the vertex of the highest rank and remote the bots of that vertex to the nearest adjacent vertex. 
       
-         Method 2: Extract the vertex of the highest rank and remote the bots of that vertex along the first edge on the shortest path from that vertex to the home vertex. 
+      Method 2: Extract the vertex of the highest rank and remote the bots of that vertex along the first edge on the shortest path from that vertex to the home vertex. 
       
-         Method 3: Extract the vertex of the highest rank and remote the bots of that vertex to the adjacent vertex with highest percentage of students that reports yes. In this case, the destination of remoting is more likely to have bots. 
+      Method 3: Extract the vertex of the highest rank and remote the bots of that vertex to the adjacent vertex with highest percentage of students that reports yes. In this case, the destination of remoting is more likely to have bots. 
      
    (4) As the remote function returns the number of bots have been remoted, we can obtain the number of bots we just remote (the number can even be zero). We record the number of the bots if it is non-zero and repeat the above procedures (1)-(3) until we have found all the |L| bots. Note it is not necessary to move all the bots back home, yet it is possible that we have sent back all the bots home when we stop our algorithm. We always keep track of the number of bots in vertices that have been served as remoting destinations.
 
@@ -74,20 +74,26 @@ The implementation of this project could be split into two parts: one is figurin
 
 5. What kinds of inputs do you think your solvers will do well on? Do poorly on?
 
-   Answer: See below algorithms.
+   Answer for question 4 and 5: Please see below algorithms and their analysis.
    
 
-### Our algorithms:
+### Algorithms:
 
 ##### Brute-force MST without scouting
 
-Main idea:
+Main idea: 
 
-The main idea is to find the MST for the whole graph and then remote the edges according to Q1. 
+   (1) First find the MST for the whole graph. 
+   
+   (2) Start from the vertices with the maximum depth in the MST and remote bots on those vertices along the direction of reducing one depth in MST.
+   
+   (3) Repeat the procedures (1) and (2) based on the updated MST which is generated at the end of each iteration. 
+   
+   (4) Stop remoting bots/iterations once we detect there is only one vertex, i.e., the home vertex, in the latest MST. As long as we keep following the algorithm, we can ensure that each edge in the original MST can be passed only once, so that the remote cost along any edge in the MST would be counted into total cost for only once. 
 
 Analysis:
 
-This method guarantees that all the bots would be found. When (the bots number / the vertices number) becomes larger, this algorithm would gets better. However, the performance for this algorithm for the test cases is not so good since there's only 5 bots for most of the cases. This algorithm would do poorly when the bot number is relatively small. The average score gained for this algorithm is about 88. 
+  The algorithm guarantees that all the bots would be found. When the ratio of #bots/#vertices becomes larger (# represents the number of the object), this algorithm would perform better. However, its performance for the given test cases is not so good as there is only 5 bots for most of the test cases, indicating that the algorithm would do poorly under the condition that the number of bots is relatively small. The average score obtained for the algorithm using the given test cases is about 88. 
 
 
 
