@@ -119,7 +119,9 @@ The cost of this algorithm is less than the algorithm brute-force MST without sc
 
 Main idea:
 
-We first analyze students’ scout. Sorting the node with the possibility of having at least one bot. Thus we could find out which vertex has the most possibility of containing bots. Then we would like to find out which vertex has bots. We move the bots according to student’s scout one by one. Since each remote ends we could know the quantity of bots moved. If the return value is 0 then indicates that node do not have bots. The finding bots process will end if all the missing bots are found. At last we use shortest path algorithm, by calculating the Dijkstra path. Sending the bots home with the shortest path.
+   (1) Apply all the students to scout all the vertices. Sorting the vertices with the possibility of having at least one bot according to the number of students reporting "YES" on the vertex. 
+   (2) Extract the vertex with the most possibility of containing bots. 
+   Then we would like to find out which vertex has bots. We move the bots according to student’s scout one by one. Since each remote ends we could know the quantity of bots moved. If the return value is 0 then indicates that node do not have bots. The finding bots process will end if all the missing bots are found. At last we use shortest path algorithm, by calculating the Dijkstra path. Sending the bots home with the shortest path.
 
 Analysis:
 
