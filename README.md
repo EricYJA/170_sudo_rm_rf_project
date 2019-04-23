@@ -119,7 +119,7 @@ The cost of this algorithm is less than the algorithm brute-force MST without sc
 
 Main idea:
 
-We first calculate students’ scout. Sorting the node with the possibility of having at least one bot. Thus we could find out which vertex has the most possibility of containing bots. Then we would like to find out which vertex has bots. We move the bots according to student’s scout one by one. Since each remote ends we could know the quantity of bots moved. If the return value is 0 then indicates that node do not have bots. The finding bots process will end if all the missing bots are found. At last we use shortest path algorithm, by calculating the Dijkstra path. Sending the bots home with the shortest path.
+We first analyze students’ scout. Sorting the node with the possibility of having at least one bot. Thus we could find out which vertex has the most possibility of containing bots. Then we would like to find out which vertex has bots. We move the bots according to student’s scout one by one. Since each remote ends we could know the quantity of bots moved. If the return value is 0 then indicates that node do not have bots. The finding bots process will end if all the missing bots are found. At last we use shortest path algorithm, by calculating the Dijkstra path. Sending the bots home with the shortest path.
 
 Analysis:
 
@@ -131,11 +131,15 @@ The algorithm could find a path for each bots. Because the second step will not 
 
 Main idea:
 
-Create dense clusters in the connected graph: we first use some defined function to measure the size of graph and separate the graph into several components. Can be sort the degree descending. Max all shortest path and divide the length by the function of number of vertices, split into subtrees. Function unknow, should try. Another one is to delete heaviest edge until we have some number of subgroups.
+The basic point of this algorithm is based on MST method yet to find several dense clusters in the (connected) whole graph and then to find the MST in each cluster. For the implementation of finding several dense clusters, it could be:
+
+We first use some defined function to measure the size the graph and separeate the graph into several components. The function is defined manually, and needs trials (we select the well-performed ones according to the outcomes). For instance, we find the maximum length among all shortest path from the home vertex to other vertices in the graph. Then we divide this length by the square root of #vertices (or some other function with respect to the number of vertices in the graph) and set the ratio as a feature of the graph size. Upon obtaining this feature, we then calculate the diameter of each cluster according to some  formula defined by us. As for the center of each cluster, we are thinking of selecting some vertices with relative high degree, which we can find by sorting the vertices by the descending degree. Another way to find clusters could be: we set a lower bound of the number of clusters, then we remove/delete the edge with the heaviest weight until we reach that number of clusters. Note this approach needs to make a copy of the graph since we need to send those bots back home and we need the edge that have been removed.
+
+Once we obtain those clusters, we gather the bots in each cluster to the center using the path given by the MST of the cluster rooted at the center vertex. Then we send all bots back home by using the MST of the graph consisting only the vertices that are the center of those clusters. 
 
 Analysis:
 
-The implementation for this algorithm is still in progress. Considering this algorithm is quite complicated. We would not give a detailed analysis for now. 
+The algorithm involves several unknown functions we have to define by ourselves. Thus, the performance cannot be predicted with so many uncertain factors. Besides, the implementation for this algorithm is still in progress. We would not give a detailed analysis for now. 
 
 
 ##### Steiner tree:
