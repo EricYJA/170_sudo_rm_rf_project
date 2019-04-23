@@ -85,7 +85,7 @@ Main idea:
 
    (1) First find the MST for the whole graph. 
    
-   (2) Start from the vertices with the maximum depth in the MST and remote bots on those vertices along the direction of reducing one depth in MST.
+   (2) Start from the vertices with the maximum depth in the MST and remote bots on those vertices along the direction of reducing one depth in MST. Then delete the vertices with the maximum depth from the MST and get a size-reduced MST. 
    
    (3) Repeat the procedures (1) and (2) based on the updated MST which is generated at the end of each iteration. 
    
@@ -101,11 +101,17 @@ Analysis:
 
 Main idea:
 
-Find the MST first. Scout all the nodes with the max depth in MST with all students. remote the vertes with the max depth and more than half of the students reports yes. delete all the nodes with the max depth in MST. Repeat the steps above untill there's only one home vertices left in the MST
+   (1) First find the MST for the whole graph. 
+   
+   (2) Apply all the students to scout all the vertices with the maximum depth in the MST, that is, the leaves of MST.
 
+   (3) Find the target vertices set by selecting the vertices with the maximum depth of the current MST and which are reported "YES (has guavabots on that vertex)" by more than half of the students. We remote the bots on every vertex in this target vertices set along the direction of reducing one depth in current MST. Then delete all the vertices with the maximum depth from the MST and get a size-reduced MST. Note here the deleted vertices may be not included in our target vertices set.
+   
+   (4) Repeat the procedures (1) to (3) based on the updated MST which is generated at the end of each iteration. Stop remoting bots/iterations once we detect there is only one vertex, i.e., the home vertex, in the latest MST. 
+  
 Analysis:
 
-Notice that this algorithm costs less than the algorithm before. It eliminate all the remotes that are unlikely to find bots. However, this algorithm does not guarantee finding all the bots. The gain for this algorithm has an average of 75. However, the gain could reach 95 and higher if all the bots are found, proving you are lucky. This algorithm would do extremely well when the accuracy of the students are high and the number of bots is relatively large. 
+The cost of this algorithm is less than the algorithm brute-force MST without scouting. It ignores the vertices that are unlikely to have bots in every iteration. However, we cannot confirm the fact that the vertices do not have bots as the students are unreliable and the scouting percentage can only be a reference. That is to say, the algorithm does not guarantee to find all the bots. As mentioned before, the score obtained by sending a bot back home is greater than the score gained by saving time during scouting and remoting, the cost of this algorithm is kind of unstable and we got an average of score 75 using the given test cases. The cost of this algorithm largely depends on the completion of finding the bots' positions. If it is close to the state that all the bots are found, it could even reach the score 95 and higher using some test cases. Hence, we conclude that the algorithm would perform extremely well when students are more reliable and the number of bots is relatively large. 
 
 
 
