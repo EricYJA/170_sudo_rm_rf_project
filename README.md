@@ -153,10 +153,10 @@ The algorithm involves several unknown functions we have to define by ourselves.
 ##### Steiner tree:
 
 Main idea:
-Use the algorithm in Q3 to find all the bots's location. Then, find a Steiner tree for all the bot vertices and the home vertices. Then, use the same idea as Q1 to move the bots to the home vertices. 
+Use the algorithm in Q3 to find all the bots's location. Then, find a Steiner tree for all the bot vertices and the home vertices. Then, use the same idea as Q1 to move the bots to the home vertices. Knowing that the Networkx library provides the algorithm for finding the Steiner tree. The implementation is quite straight forward. 
 
 Analysis:
-This algorithm is considered as the best solution so far, since it's the optimal solution for moving all the bots home if their locations are known to us. The only problem is how to find all the bots location with the min cost. If we want to check the scout result, we need to remote on that vertex, which would incereases the cost. The method to find all the bots' location would be improved later.
+This algorithm is considered as the best solution so far, since it's the optimal solution for moving all the bots home if their locations are known to us. The idea of the Steiner tree is to come up with a MST that covers some of given the vertices. The only problem is how to find all the bots location with the min cost. If we want to check the scout result, we need to remote on that vertex, which would incereases the cost. The method to find all the bots' location will be improved later.
 
 
 
