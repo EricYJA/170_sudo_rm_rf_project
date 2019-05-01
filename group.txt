@@ -2,3 +2,7 @@ We understand that after submitting this file, our group is fixed.
 Jiahan Yu
 Haosheng Wang
 Changcheng Yuan
+
+Please check the listed group members and remember to add your group members to the Gradescope submission as well. 
+Token: "OwCt3CPaOjhxW6xNibhdO7XQikIOvWavnbPCQv/xNo9mcFZMSHdJUA==" 
+Members: ["Changcheng Yuan", "Haosheng Wang", "Jiahan Yu"]
