@@ -50,29 +50,49 @@ def find_bot(client):
     return max_num_index_list
 
 
-def find_robot_position(client):
+def find_robot_position(c):
     # Create Graph G
-    G = client.G
-    robots_remain = client.bots
-    max_num_index_list = find_bot(client) # get the student's answer (sorted by probability)
+    G = c.G
+    robots_remain = c.bots
+    max_num_index_list = find_bot(c)  # get the student's answer (sorted by probability)
 
     # Initialize the graph as a empty list
     robot_position = []
-    print("Home: ",client.home)
+    print("Home: ", c.home)
 
     for bot_num in max_num_index_list:
 
-        if robots_remain > 0: # Judgement condtion: whether to bots are all found
+        if robots_remain > 0:  # Judgement condtion: whether to bots are all found
 
             # get the dijkstra path
-            path = nx.dijkstra_path(G, bot_num, client.home)
+            path = nx.dijkstra_path(G, bot_num, c.home)
             print(path)
-            print("bots remain",robots_remain)
-            judge = client.remote(bot_num , path[1]) # Move one step using Dijstra
+            print("bots remain", robots_remain)
+            judge = c.remote(bot_num, path[1])  # Move one step using Dijstra
 
-            if judge > 0: # Find a robot!
-                robot_position.append(path[1])
-                robots_remain -= 1
-    return robot_position # a list contains all robots position
+            if judge > 0:  # Find a robot!
+                if robot_position.count(path[0])==0:
+                    robot_position.append(path[1])
+                    robots_remain -= 1
+                    print("Find a bot! There are still bots left: ", robots_remain, "The bot is from ",path[0] ,"to the node", path[1])
+                    print("The current robot_position list is: ",robot_position)
+                elif judge == robot_position.count(path[0]):
+                    # Get the index of elements we want to update
+                    update_index = [i for i,x in enumerate(robot_position) if x == path[0]]
+                    for i in update_index: # update the bots location in robot_position
+                        robot_position[i]=path[1]
+
+                else: # else condition: the number of robots moved (judge) is larger than pos.count(), which means we need add new bots in r_pos
+                    rest_to_change = judge - robot_position.count(path[0]) # calculate how many bots we still nedd to move
+
+                    # Get the index of elements we want to update
+                    update_index = [i for i, x in enumerate(robot_position) if x == path[0]]
+                    for i in update_index:  # update the bots location in robot_position
+                        robot_position[i] = path[1]
+
+                    while rest_to_change >0 : # finally add the new detected bots in r_pos
+                        robot_position.append(path[1])
+
+    return robot_position  # a list contains all robots position
 
     client.end()
