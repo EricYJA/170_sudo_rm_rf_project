@@ -169,23 +169,27 @@ def find_robot_position(c):
                 if robot_position.count(path[0])==0:
                     robot_position.append(path[1])
                     robots_remain -= 1
-                    print("Find a bot! There are still bots left: ", robots_remain, "The bot is from ",path[0] ,"to the node", path[1], "now the bot is in the vertex", path[1])
+                    print("Find a bot! There are still bots left: ", robots_remain, "The bot is from ",path[0] ,"to the node", path[1])
                     print("The current robot_position list is: ",robot_position)
-                elif judge == robot_position.count(path[0]):
+                
+                # elif condition: the bots moved = the bots already exists in the list.
+                elif judge == robot_position.count(path[0]): 
                     # Get the index of elements we want to update
                     update_index = [i for i,x in enumerate(robot_position) if x == path[0]]
-                    for i in update_index: # update the bots location in robot_position
+                    for i in update_index:  # update the bots location in robot_position
                         robot_position[i]=path[1]
-
-                else: # else condition: the number of robots moved (judge) is larger than pos.count(), which means we need add new bots in r_pos
+                
+                # else condition: the number of robots moved (judge) is larger than pos.count() 
+                # which means we need add new bots in r_pos
+                else: 
                     rest_to_change = judge - robot_position.count(path[0]) # calculate how many bots we still nedd to move
 
                     # Get the index of elements we want to update
                     update_index = [i for i, x in enumerate(robot_position) if x == path[0]]
-                    for i in update_index:  # update the bots location in robot_position
+                    for i in update_index:      # update the bots location in robot_position
                         robot_position[i] = path[1]
 
-                    while rest_to_change >0 : # finally add the new detected bots in r_pos
+                    while rest_to_change >0 :   # finally add the new detected bots in r_pos
                         robot_position.append(path[1])
 
     return robot_position  # a list contains all robots position
