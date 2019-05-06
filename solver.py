@@ -1,6 +1,8 @@
 import networkx as nx
 import random
-from st_tree import steiner_tree
+
+from networkx.algorithms import approximation
+
 
 def solve(client):
     client.end()
@@ -147,7 +149,7 @@ def testing_method(c):
     if len(pos_bots) == 1:
         return 
 
-    st_tree_sb = steiner_tree(c.G, pos_bots)
+    st_tree_sb = approximation.steiner_tree(c.G, pos_bots)
     t_mst = nx.Graph.copy(st_tree_sb)
 
     non_home = list(range(1, c.home)) + list(range(c.home + 1, c.v + 1))
