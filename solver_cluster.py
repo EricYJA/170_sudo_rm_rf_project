@@ -103,8 +103,6 @@ def makeCluster(nodes, distance, threshold):
 
 
 def solve_cluster(c):
-    # c.end()
-    # c.start()
 
     # keep track of remote calls and home for testing VVVVVVVVVVVVV
     home = c.home
@@ -167,71 +165,15 @@ def solve_cluster(c):
     Remote bots starting from furthest bot to home, ordered using a pq.
     '''
 
-    print(botNodeSet)
-    pos_bots = list(botNodeSet)
+    botPQ = PriorityQueue()
+    for v in botNodeSet:
+        botPQ.push(v, distance[v])
 
-    pos_bots = list(set(pos_bots + [c.home]))
-    if len(pos_bots) == 1:
-        return 
+    while not botPQ.isEmpty():
+        u = botPQ.pop()
+        v = paths[u]
+        c.remote(u, v)
+        remote_calls["(" + str(u) + ", " + str(v) + ")"] += 1
 
-    st_tree_sb = approximation.steiner_tree(c.G, pos_bots)
-    t_mst = nx.Graph.copy(st_tree_sb)
-
-    non_home = list(range(1, c.home)) + list(range(c.home + 1, c.v + 1))
-    non_home = [n for n in non_home if n in list(nx.nodes(t_mst))]
-    nodes_depth = nx.shortest_path_length(t_mst, c.home)
-    
-    while t_mst.number_of_nodes() > 1:
-        max_depth = max(nodes_depth.values())
-
-        for x in non_home:
-
-            # remote if the depth of x is max and it has bots
-            if nodes_depth[x] == max_depth:
-                
-                # remote only when there's a bot in the vertex
-                if x in pos_bots:
-                    # remote every MST edge
-                    neigh_iter = nx.neighbors(t_mst, x)
-                    neghi = neigh_iter.__next__()
-
-                    tmp_bots = c.remote(x, neghi)
-
-                    pos_bots.remove(x)
-                    pos_bots.append(neghi)
-
-
-                # delete the n ode from MST
-                t_mst.remove_node(x)
-                nodes_depth.pop(x)
-                non_home.remove(x)
-
-
-    #### Original implementation ###
-
-    # botPQ = PriorityQueue()
-    # for v in botNodeSet:
-    #     botPQ.push(v, distance[v])
-
-    # while not botPQ.isEmpty():
-    #     u = botPQ.pop()
-    #     v = paths[u]
-    #     c.remote(u, v)
-    #     remote_calls["(" + str(u) + ", " + str(v) + ")"] += 1
-
-    #     if v != c.home:
-    #         botPQ.push(v, distance[v])
-
-    # c.end()
-
-    # counter = 0
-    # for key in remote_calls.keys():
-    #     if remote_calls[key] > 0:
-    #         counter += 1
-    #         if remote_calls[key] > 1:
-    #             print(key, remote_calls[key])
-    # print('home = ', home)
-    # print('number of students used: ', chosen)
-    # print('number of students: ', num_students)
-    # print('number of edges', len(edges))
-    # print('number remote calls: ', counter)
+        if v != c.home:
+            botPQ.push(v, distance[v])
