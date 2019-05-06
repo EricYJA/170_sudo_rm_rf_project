@@ -2,7 +2,6 @@
 
 See [the Guavabot website](http://guavabot.cs170.org/) to get started!
 
-<<<<<<< HEAD
 ### Group "sudo rm rf"
 
 ### Member:
@@ -161,5 +160,3 @@ This algorithm is considered as the best solution so far, since it's the optimal
 
 
 
-=======
->>>>>>> mst_trials
