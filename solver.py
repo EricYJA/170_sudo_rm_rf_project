@@ -233,10 +233,6 @@ def find_bot_position_st(c):
                 break
         
         tmp_bot_count = c.remote(node, node_re)
-        if tmp_bot_count + bot_count >= c.bots and tmp_bot_count > 0:
-            bots_pos.append(node)
-            break
-
         tmp_bot_count = c.remote(node_re, node)
         checked.append(node)
         checked.append(node_re)
