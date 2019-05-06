@@ -2,13 +2,14 @@ import networkx as nx
 import random
 
 from networkx.algorithms import approximation
+from solver_cluster import solve_cluster
 
 
 def solve(client):
     client.end()
     client.start()
 
-    testing_method(client)
+    solve_cluster(client)
     
     client.end()
 
@@ -142,9 +143,9 @@ def mst_brute_force(c):
                 non_home.remove(x)
 
 
-def testing_method(c):
+def best_method_sofar(c):
     pos_bots = find_robot_position(c)
-    print(pos_bots + [c.home], c.home)
+
     pos_bots = list(set(pos_bots + [c.home]))
     if len(pos_bots) == 1:
         return 
@@ -182,6 +183,9 @@ def testing_method(c):
                 non_home.remove(x)
 
 
+def testing_method(c):
+    find_bot_position_st(c)
+
 ########################
 ### Helper Functions ###
 ########################
@@ -216,37 +220,80 @@ def find_bot_position_st(c):
     result.sort(key=sortHelper, reverse=True)
 
     # start finding using the rank
-    checked = list()
-    bot_count = 0
-    bots_pos = list()
+    edgeList = list(c.graph.edges.data())
+    checked = list() # add the vertex to checked
+    bot_count = 0 # count the number to cut
+    bots_pos = list() # final return 
+    count = 0 # count the loop
     for i in result:
+        count += 1
+
         if i[0] in checked:
             continue
 
-        node = i[0]
-        nei_list = list(c.graph.neighbors(node))
-        nei_tuples = [t for t in result if t[0] in nei_list]
-        nei_tuples.sort(key=sortHelper, reverse=True)
+        # use the shortest rank
+        if count < 6:
+            node = i[0]
+            nei_list = list(c.graph.neighbors(node))
+            nei_tuples = [t for t in result if t[0] in nei_list]
+            nei_tuples.sort(key=sortHelper, reverse=True)
 
-        node_re = 0
-        for e in nei_tuples:
-            if e[0] not in checked:
-                node_re = e[0]
-                break
+            node_re = 0
+            for e in nei_tuples:
+                if e[0] not in checked:
+                    node_re = e[0]
+                    break
+            
+            tmp_bot_count = c.remote(node, node_re)
+            tmp_bot_count = c.remote(node_re, node)
+            checked.append(node)
+            checked.append(node_re)
+
+            bot_count += tmp_bot_count
+
+            if tmp_bot_count > 0:
+                bots_pos.append(node)
         
-        tmp_bot_count = c.remote(node, node_re)
-        tmp_bot_count = c.remote(node_re, node)
-        checked.append(node)
-        checked.append(node_re)
+        # use the lightest weight
+        else:
+            node = i[0]
+            local_edlist = list(c.graph.edges(node))
+            local_weight = list()
 
-        bot_count += tmp_bot_count
+            for e in edgeList:
+                tmp_tup = (e[0], e[1])
+                tmp_tup_re = (e[1], e[0])
+                if tmp_tup in local_edlist or tmp_tup_re in local_edlist:
+                    local_weight.append(e)
 
-        if tmp_bot_count > 0:
-            bots_pos.append(node)
+            local_weight.sort(key=lambda val : val[2]['weight'])
 
+            node_re = 0
+            for i in local_weight:
+                remote_edge = i
+                if (remote_edge[0] == node):
+                    node_re = remote_edge[1]
+                else:
+                    node_re = remote_edge[0]
+                
+                if node_re not in checked:
+                    break
+
+            tmp_bot_count = c.remote(node, node_re)
+            checked.append(node)
+
+            bot_count += tmp_bot_count
+            
+            if tmp_bot_count > 0:
+                bots_pos.append(node_re)
+            
         if bot_count == c.bots:
             break
-    
+
+    # print(bot_count)
+    # print(bots_pos)
+    # print(c.bot_locations)
+
     return bots_pos
 
 
